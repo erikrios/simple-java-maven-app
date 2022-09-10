@@ -1,19 +1,30 @@
-node {
-  stage('Build') {
-    def mavenImage = docker.image("maven:3-alpine")
-
-    mavenImage.inside('-v /root/.m2:/root/.m2', {
-      sh "pwd"
-      sh "ls -al"
-      sh "mvn -B -DskipTests clean package"
-    })
-  }
-
-  stage('Test') {
-    def mavenImage = docker.image("maven:3-alpine")
-
-    mavenImage.inside('-v /root/.m2:/root/.m2', {
-      sh "mvn test"
-    })
-  }
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
 }
