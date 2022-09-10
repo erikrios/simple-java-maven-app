@@ -6,7 +6,7 @@ node {
       sh "pwd"
       sh "ls -al"
       sh "ls .."
-      sh "mvn -B -DskipTests clean package"
+      sh "mvn -X -B -DskipTests clean package"
     })
   }
 
