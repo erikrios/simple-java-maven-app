@@ -1,4 +1,4 @@
-node('Jenkins-VM') {
+node {
   stage('Build') {
     def mavenImage = docker.image("maven:3-alpine")
 
