@@ -1,6 +1,6 @@
 node {
   stage('Build') {
-    def mavenImage = docker.image("maven:3-alpine")
+    def mavenImage = docker.image("maven:3.8.6-eclipse-temurin-11-alpine")
 
     mavenImage.inside('-v /root/.m2:/root/.m2', {
       sh "pwd"
@@ -11,7 +11,7 @@ node {
   }
 
   stage('Test') {
-    def mavenImage = docker.image("maven:3-alpine")
+    def mavenImage = docker.image("maven:3.8.6-eclipse-temurin-11-alpine")
 
     mavenImage.inside('-v /root/.m2:/root/.m2', {
       sh "mvn test"
