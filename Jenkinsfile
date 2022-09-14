@@ -29,7 +29,6 @@ node {
     mavenImage.inside('-v /root/.m2:/root/.m2', {
       sh './jenkins/scripts/deliver.sh' 
       sh 'sleep 1m'
-      sh './jenkins/scripts/kill.sh' 
     })
   }
 }
