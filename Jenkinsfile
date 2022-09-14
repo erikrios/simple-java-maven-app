@@ -3,7 +3,7 @@ node {
     def mavenImage = docker.image("maven:3.8.6-eclipse-temurin-11-alpine")
 
     mavenImage.inside('-v /root/.m2:/root/.m2', {
-      sh git pull
+      sh 'git pull'
       sh "mvn -B -DskipTests clean package"
     })
   }
